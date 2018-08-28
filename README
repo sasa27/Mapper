@@ -1,0 +1,72 @@
+***********Mapper***********
+
+Introduction
+============
+
+Mapper is a tool that select lines of a log file to analyse, separate them into
+different trace files, and transform them on an easier syntax to work with.
+
+
+For Users
+=========
+
+Usage : java -jar Mapper.jar -i <input> -r <regex> -o <output> -e <extract algo>
+
+-i/-input : input file to analyse
+-r/-regex : regex file to use on the input file
+-o/-output : name of the output directory
+-e/-extract : extract method used to separate generated files
+(date/id/dateid/iddate)
+
+Options :
+-t show the duration of each step of the program
+-s write non-matched lines on an other file named "trash"
+
+
+regex syntax
+============
+
+You must write your regex on an other file and give it to the program with the
+-r option.
+This is the syntaxe you must adopt in this file :
+-r <regex>
+-d <date format> (if needed)
+
+The regex must contain many groupname to work :
+<label> is required
+<param1> <param2> etc... if there exist (be careful to the order)
+<date> if using an extraction method that need it
+<idHOST> if using an extraction method that need it
+
+
+Extraction Algorithm
+====================
+
+There are 4 extraction methods :
+
+date : 	sort lines by date. If there is an unnatural gap between 2 events,
+the algorithm detect it and create a new file to keep writing events.
+
+id : sort line by idHost. It can be an ip adress or a name.
+
+dateid : sort line by date first. Then, sort line by id.
+
+iddate : sort line by ip first. Then, sort line by date.
+
+
+Results
+=======
+
+Files created are transformed following the model :
+
+<label>(<param1>;<param2>;<param3>...)
+<label>(<param1>;<param2>;<param3>...)
+.
+.
+.
+.
+
+
+
+
+
